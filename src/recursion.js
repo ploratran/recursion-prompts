@@ -7,11 +7,28 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+    // base case: n = 0 => return 0; 
+    // base case: n = 1 => return 1; 
+    // base case: n < 1 => return null;
+    if (n === 0) { return 1; }
+    if (n === 1) { return 1; }
+    if (n < 0) { return null; }
+    if (n > 0) { return n * factorial(n-1); }
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+    // base case: array is empty => return 0;
+    if (!Array.isArray(array) || array.length === 0) { return 0; }
+    let result = array[0];
+    // result =  1 or array[0]
+    // result = 1 + 2 or 1 + array[1] ==> result = 3
+    // result = 1 + 2 + 3 or 1 + 2 + array[2] = 6
+    // result = 1 + 2 + 3 + 4 or 1 + 2 + 3 + array[3] = 10
+    let subArray = array.slice(1);
+    let output = array[0] + sum(subArray);
+    return output;
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
