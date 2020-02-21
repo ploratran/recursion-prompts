@@ -21,7 +21,6 @@ var factorial = function(n) {
 var sum = function(array) {
     // base case: array is empty => return 0;
     if (!Array.isArray(array) || array.length === 0) { return 0; }
-    let result = array[0];
     // result =  1 or array[0]
     // result = 1 + 2 or 1 + array[1] ==> result = 3
     // result = 1 + 2 + 3 or 1 + 2 + array[2] = 6
@@ -36,6 +35,7 @@ var sum = function(array) {
 var arraySum = function(array){
     let sum = 0;
     // base case: if array is just a single number => return that number
+    // arraySum(1) ==> // 1
     if (typeof array === 'number') {
         return array;
     }
@@ -66,11 +66,44 @@ var isEven = function(n) {
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+    // n is a positive number with 0: n >= 0
+    if (n >= 0) {
+        // base case: if n is 0 => return 0;
+        if (n === 0) { return 0; }
+        // same as sum() but this time start at (n-1)
+        return (n-1) + sumBelow(n - 1);
+    } else {
+        // sumBelow(-6) = -5 + -4 + -3 + -2 + -1 + 0 = -15
+        // sumBelow(-2) = -1 + 0 = -1
+        // sumBelow(-1) = 0
+        if (n === 0) { return 0; }
+        return (n+1) + sumBelow(n + 1);
+    }
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+    // edge case: if x === y => return []
+    // edge case: if x is consecutive to y => return []
+    // [3,4] => return []
+    if (x === y) { return []; }
+    if ((x+1) === y) { return []; }
+    if ((x-1) === y) { return []; }
+    
+    // @output: hold array of elemet within range
+    // let output; 
+    // case: x < y: 
+    if (x < y) {
+   		return [x+1].concat(range(x + 1, y));
+    } 
+    // case: x > y:
+    if (x > y) {
+      return [x-1].concat(range(x - 1, y));
+    }
+    
+    // console.log(output);
+    // return output;
 };
 
 // 7. Compute the exponent of a number.
