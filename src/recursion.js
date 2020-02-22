@@ -129,24 +129,23 @@ var exponent = function(base, exp) {
 };
 
 // 8. Determine if a number is a power of two.
-// powerOfTwo(0); // true ==> 2^0 = 1
+// powerOfTwo(n) <==> 2 ^ n; 
+// powerOfTwo(0); // false ==> 2^0 = 1
 // powerOfTwo(1); // true ==> 2^1 = 2
 // powerOfTwo(16); // true ==> 2^4 = 16
 // powerOfTwo(10); // false ==> 2^x != 10
 // https://en.wikipedia.org/wiki/Power_of_two
 var powerOfTwo = function(n) {
     // base case: 2 ^ 0 = 1
-    if (n <= 0) { 
+    if (n === 0) { 
         return false; 
     }
     if (n === 1) {
         return true; 
     }
 
-    // recursive case: 2 * powerOfTwo(n-1)
-    // powerOfTwo(16) = 2 * powerOfTwo(16/2 = 8) * powerOfTwo(8/2 = 4) * powerOfTwo(4/2 = 2) * powerOfTwo(2/2 = 1) 
-        // let c = 2 * powerOfTwo(n/2);
-        // console.log('c ' + c);
+    // recursive case: powerOfTwo(n/2)
+    // powerOfTwo(16) = powerOfTwo(16/2 = 8) * powerOfTwo(8/2 = 4) * powerOfTwo(4/2 = 2) * powerOfTwo(2/2 = 1) 
     return n > 1 ? powerOfTwo(n/2) : false; 
 };
 
