@@ -84,15 +84,14 @@ var sumBelow = function(n) {
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
-    // edge case: if x === y => return []
-    // edge case: if x is consecutive to y => return []
+    // base case: if x === y => return []
+    // base case: if x is consecutive to y => return []
     // [3,4] => return []
     if (x === y) { return []; }
     if ((x+1) === y) { return []; }
+    // base case: when x > y, check if x is consecutive to y => return []
     if ((x-1) === y) { return []; }
     
-    // @output: hold array of elemet within range
-    // let output; 
     // case: x < y: 
     if (x < y) {
    		return [x+1].concat(range(x + 1, y));
@@ -101,9 +100,6 @@ var range = function(x, y) {
     if (x > y) {
       return [x-1].concat(range(x - 1, y));
     }
-    
-    // console.log(output);
-    // return output;
 };
 
 // 7. Compute the exponent of a number.
@@ -112,13 +108,46 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+    // base case: every number to the power of 0 is 1
+    if (exp === 0) { return 1; }
+    // base case: every number to the power of 1 is that number
+    if (exp === 1) { return base; }
+    
+    // 8 = exponent(8, 1)
+    // 64 = 8 * exponent(8, (2-1))
+    // if exp is positive number:
+    if (exp >= 0) {
+        return base * exponent(base, exp - 1);
+    }
+    
+    // 0.0625 = 4^(-2) = 1 / 4^(--2) = 1 /  4^2 = 1 / 16 
+    // if exp is negative number: 
+    if (exp < 0) {
+        let positiveExp = -exp; 
+        return  1 / (base * exponent(base, positiveExp - 1));
+    }
 };
 
 // 8. Determine if a number is a power of two.
-// powerOfTwo(1); // true
-// powerOfTwo(16); // true
-// powerOfTwo(10); // false
+// powerOfTwo(0); // true ==> 2^0 = 1
+// powerOfTwo(1); // true ==> 2^1 = 2
+// powerOfTwo(16); // true ==> 2^4 = 16
+// powerOfTwo(10); // false ==> 2^x != 10
+// https://en.wikipedia.org/wiki/Power_of_two
 var powerOfTwo = function(n) {
+    // base case: 2 ^ 0 = 1
+    if (n <= 0) { 
+        return false; 
+    }
+    if (n === 1) {
+        return true; 
+    }
+
+    // recursive case: 2 * powerOfTwo(n-1)
+    // powerOfTwo(16) = 2 * powerOfTwo(16/2 = 8) * powerOfTwo(8/2 = 4) * powerOfTwo(4/2 = 2) * powerOfTwo(2/2 = 1) 
+        // let c = 2 * powerOfTwo(n/2);
+        // console.log('c ' + c);
+    return n > 1 ? powerOfTwo(n/2) : false; 
 };
 
 // 9. Write a function that reverses a string.
