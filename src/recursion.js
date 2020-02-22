@@ -150,7 +150,25 @@ var powerOfTwo = function(n) {
 };
 
 // 9. Write a function that reverses a string.
+// HINT: use String.substring(startIndex, endIndex) => return part of the string
+// HINT: use String.charAt() ==> to find the firs char at a given string
 var reverse = function(string) {
+    // base case: string is an empty string 
+    if (string === '') { return ''; }
+
+    // reverse('ahihi) => reverse('hihi') + 'a' 
+    // reverse('hihi) => reverse('ihi') + 'h'
+    // reverse('ihi') => reverse('hi') + 'i' 
+    // reverse('hi') => reverse('i') + 'h' 
+    // reverse('i') => reverse('') + 'i' => hit base case 
+
+    // reverse('') + 'i' => 'i'
+    // reverse('i') + 'h' => 'ih'
+    // reverse('ih') + 'i' => 'ihi'
+    // reverse('ihi') + 'h' => 'ihih'
+    // reverse('ihih') + 'a' => 'ihia'
+
+    return reverse(string.substring(1)) + string.charAt(0);
 };
 
 // 10. Write a function that determines if a string is a palindrome.
