@@ -202,7 +202,26 @@ var palindrome = function(string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
+
+// base case: every number mod 0 = NaN
+// base case: x < y => x mod y = x
+// ex: 2 mod 5 = 2
+
+// IMPORTANT: has to change sign of y to positive to make all cases work: y = -y
 var modulo = function(x, y) {
+    if (y === 0) { return NaN; }
+    
+    if (y < 0) { y = -y; }
+
+    if (x < 0) { 
+        return -modulo(-x, y);
+    }
+    
+    if (x < y) { 
+        return x;
+    }
+
+    return modulo(x - y, y);
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
