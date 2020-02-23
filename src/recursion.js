@@ -72,6 +72,7 @@ var sumBelow = function(n) {
         if (n === 0) { return 0; }
         // same as sum() but this time start at (n-1)
         return (n-1) + sumBelow(n - 1);
+        // n is negative: n < 0
     } else {
         // sumBelow(-6) = -5 + -4 + -3 + -2 + -1 + 0 = -15
         // sumBelow(-2) = -1 + 0 = -1
@@ -173,6 +174,27 @@ var reverse = function(string) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+    // check for capital letters => lower case all letters using .toLowerCase()
+    let str = string.toLowerCase();
+
+    // check for white spaces => remove white spaces with no space:
+    // HINT: use \s as for whitespace in regex ==> replace whitespace with '' no place; 
+    str = str.replace(/\s+/g, '');
+
+    // base case: any string that contains only 1 letter is palindrome
+    // ex: 'a' => true
+    if (str.length === 1) { return true; }
+    
+    // base case: an empty string is also a palindrome: 
+    if (str.length === 0) { return true; }
+    
+    // base case: if first letter and last letter are not same => not palindrome
+    if (str.charAt(0) !== str.charAt(str.length - 1)) {
+    	return false; 
+    }
+
+    // recusive case: start with inward letters => compare first letter with last letter 
+    return palindrome(str.slice(1, str.length - 1));
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
