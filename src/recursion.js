@@ -226,7 +226,23 @@ var modulo = function(x, y) {
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
+// ex: 2 * 5 = 10 <=> 2 + 2 + 2 + 2 + 2 = 10
+// ex: 5 * 2 = 10 <=> 2 + 2 + 2 + 2 + 2 (5 times) = 10
+// base case: any number times 0 = 0
+// base case: any number times 1 equal the other number
+// recursive case: 
+// when (y > 0) => decrement y => x + multiply(x, y-1)
+// when (y < 0) => increment y and negate sign of result => -x + multiply(x, y+1)
 var multiply = function(x, y) {
+    if (x === 0 || y === 0) { return 0; }
+    if (y === 1) { return x; }
+    if (x === 1) { return y; }
+
+    if (y > 0) {
+        return x + multiply(x, y-1);
+    } else {
+        return -x + multiply(x, y+1);
+    }
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
