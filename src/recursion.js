@@ -263,6 +263,15 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+    // base case: if both are empty str => return true; 
+    if (str1 === '' && str2 === '') { return true; }
+
+    // base case: compare first char of each string => false if not equal
+    if (str1.charAt(0) !== str2.charAt(0)) { return false; }
+
+    // recursive case: compare each next char until not equal => return false or true
+    // HINT: .slice() till str.length to compare all character. str.length => exclusive
+    return compareStr(str1.slice(1, str1.length), str2.slice(1, str2.length)); 
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
