@@ -7,7 +7,7 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
-    // base case: n = 0 => return 0; 
+    // base case: n = 0 => return 1; 
     // base case: n = 1 => return 1; 
     // base case: n < 1 => return null;
     if (n === 0) { return 1; }
@@ -32,15 +32,17 @@ var sum = function(array) {
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
+// arraySum(3); // 3
 var arraySum = function(array){
     let sum = 0;
     // base case: if array is just a single number => return that number
-    // arraySum(1) ==> // 1
+    // arraySum([1]) ==> // 1
     if (typeof array === 'number') {
+        console.log('array ' + array);
         return array;
     }
     
-    // if array is actually an array ==> check with Array.isArray()
+    // if type of an array is an array ==> check with Array.isArray()
     // loop thru array, add sum to each element inside the array
     // call recursion for each sub-element inside sub-array
     if (Array.isArray(array)) {
@@ -66,14 +68,15 @@ var isEven = function(n) {
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
-    // n is a positive number with 0: n >= 0
+    // n is a positive number: n >= 0
     if (n >= 0) {
         // base case: if n is 0 => return 0;
         if (n === 0) { return 0; }
         // same as sum() but this time start at (n-1)
         return (n-1) + sumBelow(n - 1);
-        // n is negative: n < 0
-    } else {
+    } 
+    // n is negative: n < 0
+    else {
         // sumBelow(-6) = -5 + -4 + -3 + -2 + -1 + 0 = -15
         // sumBelow(-2) = -1 + 0 = -1
         // sumBelow(-1) = 0
@@ -84,13 +87,17 @@ var sumBelow = function(n) {
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
+// range(9,2); // [8,7,6,5,4,3]
 var range = function(x, y) {
     // base case: if x === y => return []
     // base case: if x is consecutive to y => return []
-    // [3,4] => return []
+    // [3, 4] => return []
+    // [4, 3] => return []
+    
     if (x === y) { return []; }
     if ((x+1) === y) { return []; }
     // base case: when x > y, check if x is consecutive to y => return []
+    // range(9,2); // [8,7,6,5,4,3]
     if ((x-1) === y) { return []; }
     
     // case: x < y: 
@@ -201,7 +208,7 @@ var palindrome = function(string) {
 // modulo (%) operator.
 // modulo(5,2) // 1
 // modulo(17,5) // 2
-// modulo(22,6) // 4
+// modulo(-22,6) // 4
 
 // base case: every number mod 0 = NaN
 // base case: x < y => x mod y = x
@@ -233,6 +240,7 @@ var modulo = function(x, y) {
 // recursive case: 
 // when (y > 0) => decrement y => x + multiply(x, y-1)
 // when (y < 0) => increment y and negate sign of result => -x + multiply(x, y+1)
+// ex: 5 * -2 = -10 <=> 2 + 2 + 2 + 2 + 2 (5 times) = 10
 var multiply = function(x, y) {
     if (x === 0 || y === 0) { return 0; }
     if (y === 1) { return x; }
@@ -247,7 +255,70 @@ var multiply = function(x, y) {
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
+
+/**
+ * base case: 
+ * 1) 0 / 0 = NaN => x and y = 0
+ * 2) 0 / 32 = 0 => x = 0
+ * 3) 32 / 0 = 0 => y = 0
+ * 
+ * recursive case: 
+ * A) When x and y are positive:  
+ *  1) When x > y: 
+ *      6 / 2 = 3 
+ *      6 - 2 = 4 => count = 1
+ *      4 - 2 = 2 => count = 2
+ *      2 - 2 = 0 => count = 3 (reach base case)
+ *  2) When x < y: 
+ *      78 / 453 = 0 => return 0; (reach base case)
+ * B) When x < 0 and y > 0:
+ *  1) When x < y: 
+ *      -79 / 82 = 0 => (reach base case)
+ *  2) When x > y: 
+ *      -92 / 82 = -1
+ *      -92 + 82 = -10 => count = 1
+ *      -10 + 82 = 72 ==> x = 72 and y = 82 => 72 < 82 => (reach base case)
+ * C) When x and y are negative: 
+ *      negate sign of x and y and repeat logic in section A)
+ */ 
+
 var divide = function(x, y) {
+
+    let count = 0; 
+
+    if ((x === 0) && (y === 0)) { return NaN; }
+    if (x === 0) { return 0; }
+    if (y === 0) { return 0; }
+
+
+    if ((x > 0) && (y > 0)) {
+        if ((x - y) >= 0) {
+            count += 1;
+            return divide(x - y, y) + count; 
+        } else {
+            return 0; 
+        }
+    }
+
+    if ((x < 0) && (y > 0)) {
+        if ((x + y) <= 0) { 
+            count += 1;
+            return divide(x + y, y) + -count; 
+        } else {
+            return 0; 
+        }
+    }
+
+    if ((x < 0) && (y < 0)) {
+        x = -x;
+        y = -y;
+        if ((x - y) >= 0) {
+            count += 1;
+            return divide(x - y, y) + count; 
+        } else {
+            return 0; 
+        }
+    }
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -256,6 +327,7 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+    
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
