@@ -38,7 +38,6 @@ var arraySum = function(array){
     // base case: if array is just a single number => return that number
     // arraySum([1]) ==> // 1
     if (typeof array === 'number') {
-        console.log('array ' + array);
         return array;
     }
     
@@ -255,7 +254,6 @@ var multiply = function(x, y) {
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
-
 /**
  * base case: 
  * 1) 0 / 0 = NaN => x and y = 0
@@ -264,17 +262,19 @@ var multiply = function(x, y) {
  * 
  * recursive case: 
  * A) When x and y are positive:  
- *  1) When x > y: 
+ *  1) When (x > y) or (x - y >= 0): 
  *      6 / 2 = 3 
  *      6 - 2 = 4 => count = 1
  *      4 - 2 = 2 => count = 2
  *      2 - 2 = 0 => count = 3 (reach base case)
- *  2) When x < y: 
+ *  2) When (x < y) or (x - y < 0): 
  *      78 / 453 = 0 => return 0; (reach base case)
- * B) When x < 0 and y > 0:
- *  1) When x < y: 
+ * B) When (x < 0 and y > 0):
+ *  1) When (x < y) or (x + y > 0): 
+ *      // (-79 + 82 = 3)
  *      -79 / 82 = 0 => (reach base case)
- *  2) When x > y: 
+ *  2) When (x > y) or (x + y <= 0): 
+ *      // (-92 + 82 = -10)
  *      -92 / 82 = -1
  *      -92 + 82 = -10 => count = 1
  *      -10 + 82 = 72 ==> x = 72 and y = 82 => 72 < 82 => (reach base case)
@@ -287,16 +287,14 @@ var divide = function(x, y) {
     let count = 0; 
 
     if ((x === 0) && (y === 0)) { return NaN; }
-    if (x === 0) { return 0; }
-    if (y === 0) { return 0; }
-
+    if ((x === 0) || (y === 0)) { return 0; }
 
     if ((x > 0) && (y > 0)) {
         if ((x - y) >= 0) {
             count += 1;
             return divide(x - y, y) + count; 
         } else {
-            return 0; 
+            return count; 
         }
     }
 
@@ -305,18 +303,18 @@ var divide = function(x, y) {
             count += 1;
             return divide(x + y, y) + -count; 
         } else {
-            return 0; 
+            return count; 
         }
     }
 
     if ((x < 0) && (y < 0)) {
-        x = -x;
-        y = -y;
-        if ((x - y) >= 0) {
+        x = -x; 
+        y = -y; 
+        if (x - y >= 0) {
             count += 1;
-            return divide(x - y, y) + count; 
+            return divide(x - y, y) + count;
         } else {
-            return 0; 
+            return count; 
         }
     }
 };
