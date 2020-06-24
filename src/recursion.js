@@ -401,7 +401,21 @@ var reverseArr = function(array) {
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
+
+// HINT: 
+// arr1 = [] ==> arr1.concat([]) = [] and arr1 = []
+// arr2 = arr1.concat([ [] ]) ==> arr1 = [] and arr2 = [ [] ]
 var buildList = function(value, length) {
+    // base case: 
+    // when length = 0 => return []: 
+    if (length === 0) { return []; }
+
+    // base case: 
+    // when there's only 1 value => return array with 1 value: 
+    // if (length === 1) { return [value]; }
+
+    //recursive case: 
+    return [value].concat(buildList(value, length - 1)); 
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
