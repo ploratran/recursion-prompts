@@ -324,8 +324,32 @@ var divide = function(x, y) {
 // gcd(4,36); // 4
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
+
+/* recursive case: 
+    * Euclidean Algorithm since GCD(A,B) = GCD(B,R): 
+    * gcd(14, 48) = 48 / 14 = 3 => remainder 6
+    * gcd(6, 14)  = 14 / 6 = 2 => remainder 2 
+    * gcd(2, 6) = 3 => remainder 0
+    * gcd(0, 2) => return 2 (reach base case)
+    * 
+    * gcd(8, 20) = 20 / 8 = 2 => remainder 4
+    * gcd(4, 8) = 8 / 4 = 2 => remainder 0
+    * gcd(0, 4) => return 4 (reach base case) 
+*/
 var gcd = function(x, y) {
-    
+
+    // base case:
+    // if x == 0 => gcd(0, y) = y
+    // if y == 0 => gcd(x, 0) = x 
+    if (x === 0) { return y; }
+    if (y === 0) { return x; }
+
+    // base case: 
+    // return null for all negative numbers 
+    if ((x < 0) || (y < 0)) { return null; }
+
+    // recursive case:
+    return gcd(y, x%y); 
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
