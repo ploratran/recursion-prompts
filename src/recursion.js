@@ -422,8 +422,45 @@ var buildList = function(value, length) {
 // For multiples of three, output 'Fizz' instead of the number.
 // For multiples of five, output 'Buzz' instead of the number.
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
-// fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
+// fizzBuzz(3) // ['1','2','Fizz']
 var fizzBuzz = function(n) {
+    
+    let output; 
+
+    // base case: 
+    // if n is 0 => return empty array
+    if (n <= 0) { return []; }
+
+    // base case: 
+    // if n is divisible by 3 and 5 => output is 'FizzBuzz':
+    // Remember: order of if-else condition matter:  
+    if ((n % 5 === 0) && (n % 3 === 0)) {
+        output = 'FizzBuzz'; 
+    }
+
+    // base case: 
+    // if n is divisible by 3 => output is 'Fizz': 
+    else if (n % 3 === 0) {
+        output = 'Fizz'; 
+    }
+
+    // base case: 
+    // if n is divisible by 3 => output is 'Fizz': 
+    else if (n % 5 === 0) {
+        output = 'Buzz'; 
+    }
+
+    // base case: 
+    // if nth element is not divisible by 3 or 5 => output is element
+    // Remember: convert number to String
+    else {
+        output = n.toString();
+    }
+
+    // recursive case: 
+    // fizzBuzz(n-1).concat([output]) => return element in ascending order
+    // [output].concat(fizzBuzz(n-1)) ==> return element in descending order
+    return fizzBuzz(n-1).concat([output]); 
 };
 
 // 20. Count the occurence of a value in a list.
